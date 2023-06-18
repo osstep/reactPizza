@@ -1,4 +1,5 @@
 import logoSvg from '../assets/img/pizza-logo.svg'
+import {Link} from 'react-router-dom'
 
 function Header() {
   return (
@@ -10,14 +11,16 @@ function Header() {
             src={logoSvg}
             alt="Pizza logo"
           />
-          <div>
-            <h1>React Pizza</h1>
-            <p>самая вкусная пицца во вселенной</p>
-          </div>
+          <Link to='/'>
+            <div>
+              <h1>React Pizza</h1>
+              <p>самая вкусная пицца во вселенной</p>
+            </div>
+          </Link>
         </div>
         <div className="header__cart">
-          <a
-            href="/cart.html"
+          <Link
+            to="/cart"
             className="button button--cart"
           >
             <span>520 ₽</span>
@@ -52,7 +55,7 @@ function Header() {
               ></path>
             </svg>
             <span>3</span>
-          </a>
+          </Link>
         </div>
       </div>
     </div>
