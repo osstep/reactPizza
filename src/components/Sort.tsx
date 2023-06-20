@@ -1,13 +1,19 @@
 import { useState } from 'react'
 
-function Sort() {
+function Sort({
+  value,
+  setActiveItem,
+}: {
+  value: {name: string, sortProperty: string}
+  setActiveItem: Function
+}) {
   const [isVisible, setIsVisible] = useState(false)
-  const [active, setActive] = useState(0)
-  const list = ['популярности', 'цене', 'алфавиту']
-  const setActiveItem = (i: number) => {
-    setActive(i)
-    setIsVisible(!isVisible)
-  }
+  const list = [
+    { name: 'популярности', sortProperty: 'rating' },
+    { name: 'цене', sortProperty: 'price' },
+    { name: 'алфавиту', sortProperty: 'title' },
+  ]
+
   return (
     <div className="sort">
       <div className="sort__label">
@@ -24,13 +30,24 @@ function Sort() {
           ></path>
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setIsVisible(!isVisible)}>{list[active]}</span>
+        <span onClick={() => setIsVisible(!isVisible)}>{value.name}</span>
       </div>
       {isVisible && (
-        <div  className="sort__popup">
+        <div className="sort__popup">
           <ul>
             {list.map((item, index) => {
-              return <li key={index} onClick={() => setActiveItem(index)} className={active === index ? 'active' : ''}>{item}</li>
+              return (
+                <li
+                  key={index}
+                  onClick={() => {
+                    setActiveItem(item)
+                    setIsVisible(false)
+                  }}
+                  className={value.sortProperty === item.sortProperty ? 'active' : ''}
+                >
+                  {item.name}
+                </li>
+              )
             })}
           </ul>
         </div>
