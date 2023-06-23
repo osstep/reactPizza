@@ -1,5 +1,12 @@
 import logoSvg from '../assets/img/pizza-logo.svg'
 import {Link} from 'react-router-dom'
+import Search from './Search/Search'
+
+
+interface ISearchValue {
+  searchValue: string,
+  setSearchValue: Function
+}
 
 function Header() {
   return (
@@ -18,6 +25,7 @@ function Header() {
             </div>
           </Link>
         </div>
+          <Search/>
         <div className="header__cart">
           <Link
             to="/cart"
@@ -56,6 +64,7 @@ function Header() {
             </svg>
             <span>3</span>
           </Link>
+          
         </div>
       </div>
     </div>
