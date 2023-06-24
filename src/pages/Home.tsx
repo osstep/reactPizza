@@ -1,12 +1,14 @@
+import { useState, useEffect, useContext } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import axios from 'axios'
 import Categories from '../components/Categories'
 import Sort from '../components/Sort'
 import Skeleton from '../components/Skeleton'
 import PizzaBlock from '../components/PizzaBlock'
-import { useState, useEffect, useContext } from 'react'
 import { types } from 'sass'
 import { SearchContext } from '../App'
-import { useDispatch, useSelector } from 'react-redux'
 import { setCategoryId, setSortType } from '../redux/slices/filterSlice'
+
 
 interface IData {
   id: number,
@@ -40,15 +42,13 @@ const Home = () => {
 
   useEffect(() => {
     setIsLoading(true)
-    fetch(
-      'https://648dea102de8d0ea11e8608a.mockapi.io/items?category=' +
-        `${!categoryId ? '' : categoryId}&sortBy=${sortType.sortProperty}&search=${searchValue ? searchValue : ''}`
-    )
-      .then((res) => res.json())
-      .then((obj) => {
-        setItems(obj)
-        setIsLoading(false)
-      })
+    axios.get('https://648dea102de8d0ea11e8608a.mockapi.io/items?category=' +
+    `${!categoryId ? '' : categoryId}&sortBy=${sortType.sortProperty}&search=${searchValue ? searchValue : ''}`)
+    .then((res) => {
+      setItems(res.data)
+      setIsLoading(false)
+    })
+
 
     window.scrollTo(0, 0)
   }, [categoryId, sortType, searchValue])
