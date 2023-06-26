@@ -1,5 +1,10 @@
 import { useState } from 'react'
 
+export const list = [
+  { name: 'популярности', sortProperty: 'rating' },
+  { name: 'цене', sortProperty: 'price' },
+  { name: 'алфавиту', sortProperty: 'title' },
+]
 function Sort({
   value,
   setActiveItem,
@@ -8,11 +13,6 @@ function Sort({
   setActiveItem: Function
 }) {
   const [isVisible, setIsVisible] = useState(false)
-  const list = [
-    { name: 'популярности', sortProperty: 'rating' },
-    { name: 'цене', sortProperty: 'price' },
-    { name: 'алфавиту', sortProperty: 'title' },
-  ]
 
   return (
     <div className="sort">
