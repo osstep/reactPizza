@@ -108,6 +108,7 @@ const Home = () => {
           ? items.map((obj) => {
               return (
                 <PizzaBlock
+                  id={obj.id}
                   key={obj.id}
                   title={obj.title}
                   price={obj.price}
