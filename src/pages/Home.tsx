@@ -14,6 +14,8 @@ import {
   setSortType,
   setFilters,
 } from '../redux/slices/filterSlice'
+import {setItems} from '../redux/slices/pizzasSlice'
+
 
 interface IData {
   id: number
@@ -28,26 +30,29 @@ const Home = () => {
   const navigate = useNavigate()
   const categoryId = useSelector((state) => state.filter.categoryId)
   const sortType = useSelector((state) => state.filter.sort)
+  const items = useSelector((state) => state.pizza.items)
   const dispatch = useDispatch()
   const { searchValue, setSearchValue } = useContext(SearchContext)
-  const [items, setItems] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const isSearch = useRef(false)
   const isMounted = useRef(false)
 
-  const fetchPizzas = () => {
+  const fetchPizzas = async () => {
     setIsLoading(true)
-    axios
-      .get(
-        'https://648dea102de8d0ea11e8608a.mockapi.io/items?category=' +
-          `${!categoryId ? '' : categoryId}&sortBy=${
-            sortType.sortProperty
-          }&search=${searchValue ? searchValue : ''}`
-      )
-      .then((res) => {
-        setItems(res.data)
-        setIsLoading(false)
-      })
+    try {
+      const res = await axios.get('https://648dea102de8d0ea11e8608a.mockapi.io/items?category=' +
+            `${!categoryId ? '' : categoryId}&sortBy=${
+              sortType.sortProperty
+            }&search=${searchValue ? searchValue : ''}`)
+      dispatch(setItems(res.data))
+      setIsLoading(false)
+      console.log('htylth');
+      
+    } catch (error) {
+      setIsLoading(false)
+      alert('ошибка')
+    }
+    
   }
   const onClickCategory = (index: number) => {
     dispatch(setCategoryId(index))
