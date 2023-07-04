@@ -7,14 +7,13 @@ import Categories from '../components/Categories'
 import Sort, { list } from '../components/Sort'
 import Skeleton from '../components/Skeleton'
 import PizzaBlock from '../components/PizzaBlock'
-import { types } from 'sass'
 import { SearchContext } from '../App'
 import {
   setCategoryId,
   setSortType,
   setFilters,
 } from '../redux/slices/filterSlice'
-import {setItems} from '../redux/slices/pizzasSlice'
+import { fetchPizzas } from '../redux/slices/pizzasSlice'
 
 
 interface IData {
@@ -31,29 +30,17 @@ const Home = () => {
   const categoryId = useSelector((state) => state.filter.categoryId)
   const sortType = useSelector((state) => state.filter.sort)
   const items = useSelector((state) => state.pizza.items)
+  const status = useSelector((state) => state.pizza.status)
   const dispatch = useDispatch()
   const { searchValue, setSearchValue } = useContext(SearchContext)
   const [isLoading, setIsLoading] = useState(true)
   const isSearch = useRef(false)
   const isMounted = useRef(false)
 
-  const fetchPizzas = async () => {
-    setIsLoading(true)
-    try {
-      const res = await axios.get('https://648dea102de8d0ea11e8608a.mockapi.io/items?category=' +
-            `${!categoryId ? '' : categoryId}&sortBy=${
-              sortType.sortProperty
-            }&search=${searchValue ? searchValue : ''}`)
-      dispatch(setItems(res.data))
-      setIsLoading(false)
-      console.log('htylth');
-      
-    } catch (error) {
-      setIsLoading(false)
-      alert('ошибка')
+  const getPizzas = async () => {
+      dispatch(fetchPizzas({categoryId, sortType, searchValue}))
     }
     
-  }
   const onClickCategory = (index: number) => {
     dispatch(setCategoryId(index))
   }
@@ -74,7 +61,7 @@ const Home = () => {
     window.scrollTo(0, 0)
 
     if (!isSearch.current) {
-      fetchPizzas()
+      getPizzas()
 
     }
     console.log('проверка');
@@ -109,7 +96,9 @@ const Home = () => {
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
-        {!isLoading
+        {status === 'error' ? (
+          <div>Что-то пошло не так...</div>
+        ) : (status === 'success'
           ? items.map((obj) => {
               return (
                 <PizzaBlock
@@ -123,7 +112,7 @@ const Home = () => {
                 />
               )
             })
-          : [...new Array(6)].map((_, index) => <Skeleton key={index} />)}
+          : [...new Array(6)].map((_, index) => <Skeleton key={index} />))}
       </div>
     </>
   )
