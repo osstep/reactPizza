@@ -1,15 +1,16 @@
-import React, {useContext} from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import styles from './Search.module.scss'
-import { SearchContext } from '../../App'
+import { setSearchValue } from '../../redux/slices/filterSlice'
+import { RootState } from '../../redux/store'
 
-interface ISearchValue {
-  searchValue: string,
-  setSearchValue: Function
-}
+
+
 
 const Search = () => {
-
-  const {searchValue, setSearchValue} = useContext(SearchContext)
+  
+  const searchValue = useSelector((state: RootState) => state.filter.searchValue)
+  const dispatch = useDispatch()
+  
   return (
     <input
       className={styles.root}
@@ -17,7 +18,7 @@ const Search = () => {
       placeholder="поиск..."
       value={searchValue}
       onChange={(event) => {
-        setSearchValue(event.target.value)
+        dispatch(setSearchValue(event.target.value))
         console.log(searchValue)
       }}
     />

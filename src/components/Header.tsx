@@ -2,15 +2,13 @@ import logoSvg from '../assets/img/pizza-logo.svg'
 import {Link} from 'react-router-dom'
 import Search from './Search/Search'
 import { useSelector } from 'react-redux/es/hooks/useSelector'
+import { RootState } from '../redux/store'
 
-interface ISearchValue {
-  searchValue: string,
-  setSearchValue: Function
-}
+
 
 function Header() {
 
-  const {items, totalPrice, totalItems} = useSelector(state => state.cart)
+  const {totalPrice, totalItems} = useSelector((state: RootState) => state.cart)
   
 
   return (

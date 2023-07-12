@@ -12,13 +12,14 @@ function Sort({
   value: {name: string, sortProperty: string}
   setActiveItem: Function
 }) {
-  const [isVisible, setIsVisible] = useState(false)
-  const sortRef = useRef()
+  const [isVisible, setIsVisible] = useState<boolean>(false)
+  const sortRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (!event.composedPath().includes(sortRef.current)) {
-          setIsVisible(false)
+    const handleClickOutside = (event: MouseEvent) => {
+      const composedPath = (event.composedPath && event.composedPath()) || [];
+      if (sortRef.current && !composedPath.includes(sortRef.current as EventTarget)) {
+        setIsVisible(false);
       }
       
     }

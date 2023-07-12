@@ -1,20 +1,18 @@
-import { useState, useEffect, useContext, useRef } from 'react'
+import {  useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import axios from 'axios'
 import qs from 'qs'
 import { useNavigate } from 'react-router-dom'
 import Categories from '../components/Categories'
 import Sort, { list } from '../components/Sort'
 import Skeleton from '../components/Skeleton'
 import PizzaBlock from '../components/PizzaBlock'
-import { SearchContext } from '../App'
 import {
   setCategoryId,
   setSortType,
   setFilters,
 } from '../redux/slices/filterSlice'
 import { fetchPizzas } from '../redux/slices/pizzasSlice'
-
+import { RootState } from '../redux/store'
 
 interface IData {
   id: number
@@ -27,13 +25,12 @@ interface IData {
 
 const Home = () => {
   const navigate = useNavigate()
-  const categoryId = useSelector((state) => state.filter.categoryId)
-  const sortType = useSelector((state) => state.filter.sort)
-  const items = useSelector((state) => state.pizza.items)
-  const status = useSelector((state) => state.pizza.status)
+  const categoryId = useSelector((state: RootState) => state.filter.categoryId)
+  const sortType = useSelector((state: RootState) => state.filter.sort)
+  const searchValue = useSelector((state: RootState) => state.filter.searchValue)
+  const items = useSelector((state: RootState) => state.pizza.items)
+  const status = useSelector((state: RootState) => state.pizza.status)
   const dispatch = useDispatch()
-  const { searchValue, setSearchValue } = useContext(SearchContext)
-  const [isLoading, setIsLoading] = useState(true)
   const isSearch = useRef(false)
   const isMounted = useRef(false)
 
@@ -99,7 +96,7 @@ const Home = () => {
         {status === 'error' ? (
           <div>Что-то пошло не так...</div>
         ) : (status === 'success'
-          ? items.map((obj) => {
+          ? items.map((obj: IData) => {
               return (
                 <PizzaBlock
                   id={obj.id}

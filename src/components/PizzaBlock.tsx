@@ -1,6 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState} from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { addItemToCart } from '../redux/slices/cartSlice'
+import { RootState } from '../redux/store'
+
 
 interface IPizzaBlock {
   id: number
@@ -10,15 +12,15 @@ interface IPizzaBlock {
   sizes: number[]
   types: number[]
 }
-const PizzaBlock = (props: IPizzaBlock) => {
+const PizzaBlock: React.FC<IPizzaBlock> = (props) => {
   
   
   const { id, title, price, imgUrl, sizes, types } = props
-  const item = useSelector((state) => state.cart.items.find((obj) => obj.id === id))
+  const item = useSelector((state: RootState) => state.cart.items.find((obj) => obj.id === id))
   
   const typeNames = ['тонкое', 'традиционное']
-  const [activeType, setActiveType] = useState(0)
-  const [activeSize, setActiveSize] = useState(0)
+  const [activeType, setActiveType] = useState<number>(0)
+  const [activeSize, setActiveSize] = useState<number>(0)
   const dispatch = useDispatch()
 
   

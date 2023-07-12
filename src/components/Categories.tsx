@@ -1,6 +1,9 @@
-import {useState} from 'react';
+interface CategoriesProps {
+  value: number
+  onClickCategory: (i: number) => void
+}
 
-function Categories(props: {value: number, onClickCategory: Function}) {
+const Categories: React.FC<CategoriesProps> = (props) => {
   
   const {value, onClickCategory} = props
   const categories = ['Все', 'Мясные', 'Вегетарианские', 'Гриль', 'Острые', 'Закрытыe']

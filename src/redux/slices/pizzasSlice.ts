@@ -1,10 +1,19 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
+interface IParams {
+  categoryId: number
+  sortType: {
+    name: string
+    sortProperty: string
+  }
+  searchValue: string
+}
+
 // First, create the thunk
 export const fetchPizzas = createAsyncThunk(
   'pizza/fetchPizzasStatus',
-  async (params) => {
+  async (params: IParams) => {
     const { categoryId, sortType, searchValue } = params
     const res = await axios.get(
       'https://648dea102de8d0ea11e8608a.mockapi.io/items?category=' +
@@ -18,7 +27,7 @@ export const fetchPizzas = createAsyncThunk(
 
 const initialState = {
   items: [],
-  status: 'loading' // loading || succes || error
+  status: 'loading', // loading || succes || error
 }
 
 const pizzasSlice = createSlice({

@@ -1,14 +1,25 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import CartItem from '../components/CartItem'
-import {clearCart} from '../redux/slices/cartSlice'
+import { clearCart } from '../redux/slices/cartSlice'
+import { RootState } from '../redux/store'
+
+
+interface IItem {
+  id: number
+  title: string
+  price: number
+  imgUrl: string
+  size: number
+  type: number
+  count: number
+}
 
 const Cart = () => {
-  const { items, totalPrice } = useSelector((store) => store.cart)
-  const dispatch = useDispatch();
-  
-  console.log(items);
-  
+  const { items, totalPrice } = useSelector((store: RootState) => store.cart)
+  const dispatch = useDispatch()
+
+  console.log(items)
 
   return (
     <div className="cart">
@@ -45,7 +56,10 @@ const Cart = () => {
           </svg>
           Корзина
         </h2>
-        <div onClick={() => dispatch(clearCart())} className="cart__clear">
+        <div
+          onClick={() => dispatch(clearCart())}
+          className="cart__clear"
+        >
           <svg
             width="20"
             height="20"
@@ -87,8 +101,13 @@ const Cart = () => {
         </div>
       </div>
       <div className="content__items">
-        {items.map((item) => {
-          return <CartItem key={item.id} item={item} />
+        {items.map((item: IItem) => {
+          return (
+            <CartItem
+              key={item.id}
+              item={item}
+            />
+          )
         })}
       </div>
       <div className="cart__bottom">
