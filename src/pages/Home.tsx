@@ -1,5 +1,5 @@
 import {  useEffect, useRef } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import {useSelector } from 'react-redux'
 import qs from 'qs'
 import { useNavigate } from 'react-router-dom'
 import Categories from '../components/Categories'
@@ -13,6 +13,7 @@ import {
 } from '../redux/slices/filterSlice'
 import { fetchPizzas } from '../redux/slices/pizzasSlice'
 import { RootState } from '../redux/store'
+import { useAppDispatch } from '../redux/store'
 
 interface IData {
   id: number
@@ -30,11 +31,11 @@ const Home = () => {
   const searchValue = useSelector((state: RootState) => state.filter.searchValue)
   const items = useSelector((state: RootState) => state.pizza.items)
   const status = useSelector((state: RootState) => state.pizza.status)
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const isSearch = useRef(false)
   const isMounted = useRef(false)
 
-  const getPizzas = async () => {
+  const getPizzas = () => {
       dispatch(fetchPizzas({categoryId, sortType, searchValue}))
     }
     

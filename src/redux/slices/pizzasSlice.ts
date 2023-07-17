@@ -10,6 +10,23 @@ interface IParams {
   searchValue: string
 }
 
+interface MyData {
+  id: number
+  title: string
+  price: number
+  imageUrl: string
+  sizes: number[]
+  types: number[]
+}
+
+type StatusEnum = 'loading' | 'success' | 'error'
+
+
+interface IInitialState {
+  items: MyData[]
+  status: StatusEnum
+}
+
 // First, create the thunk
 export const fetchPizzas = createAsyncThunk(
   'pizza/fetchPizzasStatus',
@@ -25,7 +42,7 @@ export const fetchPizzas = createAsyncThunk(
   }
 )
 
-const initialState = {
+const initialState: IInitialState = {
   items: [],
   status: 'loading', // loading || succes || error
 }

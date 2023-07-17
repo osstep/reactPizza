@@ -17,15 +17,15 @@ function App() {
           <div className="container">
             <Routes>
               <Route
-                path="/"
+                path="/pizza"
                 element={<Home />}
               ></Route>
               <Route
-                path="/cart"
+                path="/pizza/cart"
                 element={<Cart />}
               />
               <Route
-                path="*"
+                path="/pizza/*"
                 element={<NotFound />}
               ></Route>
             </Routes>

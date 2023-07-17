@@ -20,7 +20,7 @@ function Header() {
             src={logoSvg}
             alt="Pizza logo"
           />
-          <Link to='/'>
+          <Link to='/pizza'>
             <div>
               <h1>React Pizza</h1>
               <p>самая вкусная пицца во вселенной</p>
@@ -30,7 +30,7 @@ function Header() {
           <Search/>
         <div className="header__cart">
           <Link
-            to="/cart"
+            to="/pizza/cart"
             className="button button--cart"
           >
             <span>{totalPrice} ₽</span>
